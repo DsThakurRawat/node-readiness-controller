@@ -102,12 +102,29 @@ livenessProbe:
   path: /healthz
   initialDelaySeconds: 15
   periodSeconds: 20
+  timeoutSeconds: 1
+  successThreshold: 1
+  failureThreshold: 3
 
 # Readiness probe configuration
 readinessProbe:
   path: /readyz
   initialDelaySeconds: 5
   periodSeconds: 10
+  timeoutSeconds: 1
+  successThreshold: 1
+  failureThreshold: 3
+
+# Startup probe configuration. Disabled by default; enable on slow
+# image pulls so liveness does not kill the container during startup.
+startupProbe:
+  enabled: false
+  path: /healthz
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  successThreshold: 1
+  failureThreshold: 30
 
 # Metrics endpoint configuration.
 # Disabled by default, matching the controller's own default
